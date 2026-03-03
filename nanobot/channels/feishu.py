@@ -424,36 +424,53 @@ class FeishuChannel(BaseChannel):
         return elements or [{"tag": "markdown", "content": content}]
 
     def _split_headings(self, content: str) -> list[dict]:
-        """Split content by headings, converting headings to div elements."""
-        protected = content
-        code_blocks = []
-        for m in self._CODE_BLOCK_RE.finditer(content):
-            code_blocks.append(m.group(1))
-            protected = protected.replace(m.group(1), f"\x00CODE{len(code_blocks)-1}\x00", 1)
+        """Split content by headings and code blocks into separate card elements."""
+        _FEISHU_LANG_MAP = {
+            "py": "Python", "python": "Python",
+            "js": "JavaScript", "javascript": "JavaScript", "ts": "TypeScript", "typescript": "TypeScript",
+            "java": "Java", "go": "Go", "golang": "Go",
+            "sh": "Bash", "bash": "Bash", "shell": "Bash", "zsh": "Bash",
+            "sql": "SQL",
+            "json": "JSON", "yaml": "YAML", "yml": "YAML",
+            "xml": "XML", "html": "HTML", "css": "CSS",
+            "cpp": "C++", "c++": "C++", "c": "C", "cs": "C#", "csharp": "C#",
+            "rb": "Ruby", "ruby": "Ruby", "rs": "Rust", "rust": "Rust",
+            "php": "PHP", "swift": "Swift", "kotlin": "Kotlin", "scala": "Scala",
+            "r": "R", "matlab": "MATLAB", "lua": "Lua",
+            "dockerfile": "Dockerfile", "docker": "Dockerfile",
+        }
+
+        segments = self._CODE_BLOCK_RE.split(content)
 
         elements = []
-        last_end = 0
-        for m in self._HEADING_RE.finditer(protected):
-            before = protected[last_end:m.start()].strip()
-            if before:
-                elements.append({"tag": "markdown", "content": before})
-            text = m.group(2).strip()
-            elements.append({
-                "tag": "div",
-                "text": {
-                    "tag": "lark_md",
-                    "content": f"**{text}**",
-                },
-            })
-            last_end = m.end()
-        remaining = protected[last_end:].strip()
-        if remaining:
-            elements.append({"tag": "markdown", "content": remaining})
+        for seg in segments:
+            if not seg:
+                continue
 
-        for i, cb in enumerate(code_blocks):
-            for el in elements:
-                if el.get("tag") == "markdown":
-                    el["content"] = el["content"].replace(f"\x00CODE{i}\x00", cb)
+            if seg.startswith("```") and seg.endswith("```"):
+                inner = seg[3:-3]
+                first_line, _, body = inner.partition("\n")
+                lang_key = first_line.strip().lower()
+                lang = _FEISHU_LANG_MAP.get(lang_key, "PlainText")
+                code_text = body.rstrip("\n") if body else inner.strip()
+                if code_text:
+                    elements.append({
+                        "tag": "markdown",
+                        "content": f"```{lang_key}\n{code_text}\n```",
+                    })
+                continue
+
+            for part in self._HEADING_RE.split(seg):
+                if not part or not part.strip():
+                    continue
+                heading_match = self._HEADING_RE.match(part.strip())
+                if heading_match:
+                    elements.append({
+                        "tag": "div",
+                        "text": {"tag": "lark_md", "content": f"**{heading_match.group(2).strip()}**"},
+                    })
+                else:
+                    elements.append({"tag": "markdown", "content": part.strip()})
 
         return elements or [{"tag": "markdown", "content": content}]
 
