@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AgentMigrationStateService">
+    <option name="pendingSessionIds">
+      <option value="31786275-bd76-4a1c-9e35-bbbe9b6e75ec" />
+    </option>
+    <option name="pendingTurns">
+      <map>
+        <entry key="31786275-bd76-4a1c-9e35-bbbe9b6e75ec">
+          <value>
+            <set>
+              <option value="ce3c5bd4-341b-48d3-ae03-be75b70d2fa8" />
+              <option value="a1e91130-3b95-42a0-864d-c6f774380678" />
+              <option value="8d9360d6-5219-4dfe-bd51-971ccf1af813" />
+              <option value="9773dab9-5a21-4d33-a18b-901ceb3ba1bc" />
+              <option value="dc989847-f412-4c2e-a437-64659f13d0e3" />
+              <option value="bb62eae8-4351-4428-bc77-b75affa94555" />
+              <option value="85aac97a-741f-4422-abf6-53195f666405" />
+              <option value="21778337-c6cd-48b1-b995-9d80d8366042" />
+              <option value="2718cec3-2f76-493f-8527-aae9f3f436e1" />
+              <option value="d302b0fc-4e6d-42b5-8cf9-9c3be5fd0d44" />
+              <option value="422048cd-fc07-4587-ad20-9f04fe5eb6be" />
+              <option value="57aa6b7c-11fd-41ba-a598-6dd15ebe5783" />
+              <option value="e7995f5b-60af-47d7-9135-593167cade44" />
+              <option value="7a066137-ff32-4c34-b87f-80e9aaded255" />
+              <option value="8ffd75f5-cfda-45ea-b823-76745401eaac" />
+              <option value="75e684d0-8a38-4aba-b144-a0d0fe47742a" />
+              <option value="a3bf2497-8e88-46eb-8ce5-779485ec6a2e" />
+              <option value="5c2a74a6-d256-4888-afc6-4ac5cf7d19ea" />
+              <option value="35a1605b-445f-40a3-b20b-e1f903413686" />
+              <option value="28bbebdc-3acc-4af2-b957-0abbda424604" />
+              <option value="f65ff08c-6284-49a5-a9bb-38c5fe44e0bd" />
+              <option value="9e4a9061-9486-4847-a289-56e187f0f5c7" />
+              <option value="aad958c9-6293-48ad-9df4-1f60eb1b9f6d" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <pendingWorkingSetItems>
+      <entry key="31786275-bd76-4a1c-9e35-bbbe9b6e75ec">
+        <set>
+          <option value="file://$PROJECT_DIR$/nanobot/providers/litellm_provider.py" />
+          <option value="file://$PROJECT_DIR$/nanobot/channels/feishu.py" />
+          <option value="file://$PROJECT_DIR$/nanobot/skills/generate_sql/generate_standard_sql.md" />
+          <option value="file://$PROJECT_DIR$/nanobot/skills/generate_sql/SKILL.md" />
+          <option value="file://$PROJECT_DIR$/nanobot/agent/context.py" />
+          <option value="file://$PROJECT_DIR$/test_function_calling.py" />
+        </set>
+      </entry>
+    </pendingWorkingSetItems>
+  </component>
+</project>

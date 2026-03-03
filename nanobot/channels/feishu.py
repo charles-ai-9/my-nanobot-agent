@@ -276,6 +276,16 @@ class FeishuChannel(BaseChannel):
             logger.error("Feishu SDK not installed. Run: pip install lark-oapi")
             return
 
+        # Ensure requests / underlying HTTP clients trust a full CA bundle
+        try:
+            import certifi
+            ca_path = certifi.where()
+            os.environ.setdefault("SSL_CERT_FILE", ca_path)
+            os.environ.setdefault("REQUESTS_CA_BUNDLE", ca_path)
+            logger.debug("Using certifi CA bundle for SSL verification: %s", ca_path)
+        except Exception:
+            logger.debug("certifi not available; relying on system CA store. If you see SSL errors, install certifi and set SSL_CERT_FILE/REQUESTS_CA_BUNDLE.")
+
         if not self.config.app_id or not self.config.app_secret:
             logger.error("Feishu app_id and app_secret not configured")
             return
