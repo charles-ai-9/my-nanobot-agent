@@ -6,7 +6,7 @@ import select
 import signal
 import sys
 from pathlib import Path
-
+from dotenv import load_dotenv
 import typer
 from prompt_toolkit import PromptSession
 from prompt_toolkit.formatted_text import HTML
@@ -247,6 +247,11 @@ def gateway(
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output"),
 ):
     """Start the nanobot gateway."""
+    from pathlib import Path as _Path
+    _home_env = _Path.home() / ".nanobot" / ".env"
+    _project_env = _Path.home() / "Desktop" / "my-nanobot" / ".env"
+    load_dotenv(_home_env, override=False)
+    load_dotenv(_project_env, override=True)
     from nanobot.agent.loop import AgentLoop
     from nanobot.bus.queue import MessageBus
     from nanobot.channels.manager import ChannelManager
