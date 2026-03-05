@@ -8,7 +8,9 @@ This file documents non-obvious constraints and usage patterns.
 - Use this tool whenever the user asks to run, execute, or query SQL on MaxCompute/ODPS.
 - Do NOT explain how to run SQL manually — always call this tool directly.
 - The tool handles the connection automatically via environment variables.
-- Supports a `limit` parameter (default 500, max 5000) to control returned rows.
+- Supports a `limit` parameter (default 50, max 500) to control returned rows.
+- Always include a `LIMIT` clause in the SQL itself to avoid returning too much data.
+- Results are truncated at 20,000 characters — if the result looks incomplete, reduce columns or add `LIMIT`.
 - Always use this tool proactively when SQL execution is requested.
 
 ## exec — Safety Limits
